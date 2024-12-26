@@ -6,6 +6,8 @@ import { addProjectAPI } from '../services/allAPI';
 
 const AddProject = () => {
 
+  const {addProjectResponse,setAddProjectResponse} = useContext(addProjectResponseContext)
+
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setProjectData({
