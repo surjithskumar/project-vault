@@ -71,3 +71,19 @@ exports.getUserProjects = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error", details: error.message });
     }
 };
+
+//edit projects
+exports.editProjects=async(req,res)=>{
+    const{title,languages,overview,github,website,projectImage}=req.body
+    const uploadImage = req.file?req.file.filename:projectImage
+    const userId = req.payload
+    const {pid} = req.params
+
+    try{
+        const updateProject = await projects.findByIdAndUpdate({_id:pid},{title,languages,overview,github,website,projectImage:uploadImage,userId},{new:true})
+        await updateProject.save();
+        res.status(200).json(updateProject);
+    }catch(err){
+        res.status(401).json(err);
+    }
+}
