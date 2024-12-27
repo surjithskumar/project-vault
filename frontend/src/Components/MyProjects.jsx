@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AddProject from "../Components/AddProject";
 import { getUserProjectAPI } from "../services/allAPI";
 import { addProjectResponseContext } from "../ContextAPI/ContextShare";
+import EditProject from "./EditProject";
 
 const MyProjects = () => {
   const [allProjects, setAllProjects] = useState([]);
@@ -49,9 +50,7 @@ const MyProjects = () => {
                 <h2 className="text-danger fw-bolder">{project?.title}</h2>
               </div>
               <div className="ms-auto d-flex align-items-center">
-                <a className="me-3 btn text-dark">
-                  <i className="fa-regular fa-pen-to-square"></i>
-                </a>
+                <EditProject project={project} />
                 <a
                   className="me-3 btn text-dark"
                   href={project?.github}
