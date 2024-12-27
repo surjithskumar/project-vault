@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddProject from "../Components/AddProject";
 import { getUserProjectAPI } from "../services/allAPI";
+import { addProjectResponseContext } from "../ContextAPI/ContextShare";
 
 const MyProjects = () => {
   const [allProjects, setAllProjects] = useState([]);
+  const {addProjectResponse,setAddProjectResponse} = useContext(addProjectResponseContext);
 
-  const getAllProjects = async () => {
+  const getAllUserProjects = async () => {
     const token = sessionStorage.getItem("token");
+    //reqHeader
     if (token) {
       const reqHeader = {
         "Content-Type": "multipart/form-data",
@@ -25,8 +28,8 @@ const MyProjects = () => {
   };
 
   useEffect(() => {
-    getAllProjects();
-  }, []);
+    getAllUserProjects();
+  }, [addProjectResponse]);
 
   console.log(allProjects);
 

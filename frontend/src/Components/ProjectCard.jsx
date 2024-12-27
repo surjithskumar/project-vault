@@ -38,8 +38,8 @@ const ProjectCard = ({project}) => {
             </Col>
           </Row>
           <div className='mt-2'>
-            <a href="" target='_blank' className='me-3 btn text-dark'><i class='fa-brands fa-github fa-2x'></i></a>
-            <a href="" target='_blank' className='me-3 btn text-dark'><i class='fa-solid fa-link fa-2x'></i></a>
+            <a href={project?.github} target='_blank' className='me-3 btn text-dark'><i class='fa-brands fa-github fa-2x'></i></a>
+            <a href={project?.website} target='_blank' className='me-3 btn text-dark'><i class='fa-solid fa-link fa-2x'></i></a>
           </div>
         </Modal.Body>
 

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addProjectAPI } from '../services/allAPI';
+import { addProjectResponseContext } from '../ContextAPI/ContextShare';
 
 const AddProject = () => {
 
-  const {addProjectResponse,setAddProjectResponse} = useContext(addProjectResponseContext)
+  const {addProjectResponse,setAddProjectResponse} = useContext(addProjectResponseContext);
 
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -63,7 +64,8 @@ const AddProject = () => {
           const result = await addProjectAPI(reqBody,reqHeader);
           if(result.status==200){
             toast.success("Project uploaded");
-            handleClose()
+            handleClose();
+            setAddProjectResponse(result.data);
           }else{
             toast.warning(result.response.data);
           }

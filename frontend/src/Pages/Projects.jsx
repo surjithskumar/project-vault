@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import ProjectCard from "../Components/ProjectCard";
 import { Col, Row } from "react-bootstrap";
@@ -12,7 +12,7 @@ const Projects = () => {
     if (token) {
       const reqHeader = {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       };
       //api call
       const result = await getAllProjectAPI(reqHeader);
@@ -24,6 +24,10 @@ const Projects = () => {
       }
     }
   };
+
+  useEffect(()=>{
+    getAllProjects()
+  },[]);
 
   return (
     <>
@@ -46,15 +50,11 @@ const Projects = () => {
       </div>
 
       <Row className="container-fluid mt-5">
-        {allProjects?.length > 0 ? (
-          allProjects.map((project) => (
-            <Col sm={12} md={6} lg={4}>
-              <ProjectCard project={project} />
-            </Col>
-          ))
-        ) : (
-          <p className="text-danger fw-bolder ms-2">Nothing to Display</p>
-        )}
+        {allProjects?.length>0?allProjects.map(project=>(
+          <Col sm={12} md={6} lg={4}>
+          <ProjectCard project={project} />
+        </Col>
+        )):<p className="text-danger fw-bolder ms-2">Nothing to Display</p>}
       </Row>
     </>
   );

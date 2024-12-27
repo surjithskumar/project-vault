@@ -12,7 +12,8 @@ pfServer.use(cors())
 pfServer.use(express.json())
 pfServer.use(router)
 
-pfServer.use('uploads',express.static('./uploads'))
+//to update image in the modal
+pfServer.use('/uploads',express.static('./uploads'))
 
 const PORT = 3000
 
