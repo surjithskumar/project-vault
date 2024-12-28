@@ -36,5 +36,5 @@ export const getUserProjectAPI= async(reqHeader)=>{
 
 //updateProjectAPI
 export const updateProjectAPI=async(id,reqBody,reqHeader)=>{
-    return await commonAPI('PUT',`${server_url}/projects/${id}/update`,"",reqBody,reqHeader)
+    return await commonAPI('PUT',`${server_url}/projects/${id}/update`,reqBody,reqHeader)
 }
