@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
 import { server_url } from "../services/serverurl";
 import { updateProjectAPI } from "../services/allAPI";
 import { toast } from "react-toastify";
+import { editProjectResponseContext } from "../ContextAPI/ContextShare";
 
 function EditProject({ project }) {
+
+  const {editProjectResponse, setEditProjectResponse} = useContext(editProjectResponseContext);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -70,6 +74,7 @@ function EditProject({ project }) {
         if (result.status === 200) {
           toast.success("Project updated successfully!");
           handleClose();
+          setEditProjectResponse(result.data);
         } else {
           toast.warning(result.response.data);
         }

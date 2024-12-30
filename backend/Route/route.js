@@ -27,4 +27,7 @@ router.get('/user-project',jwtMiddleware,projectController.getUserProjects);
 //updateProject
 router.put('/projects/:pid/update',jwtMiddleware,multerConfig.single('projectImage'),projectController.editProjects)
 
+//delete projects
+router.delete('/projects/:pid/delete',jwtMiddleware,projectController.deleteProject);
+
 module.exports = router;

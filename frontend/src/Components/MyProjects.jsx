@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import AddProject from "../Components/AddProject";
-import { getUserProjectAPI } from "../services/allAPI";
-import { addProjectResponseContext } from "../ContextAPI/ContextShare";
+import { deleteProjectAPI, getUserProjectAPI } from "../services/allAPI";
+import { addProjectResponseContext, editProjectResponseContext } from "../ContextAPI/ContextShare";
 import EditProject from "./EditProject";
+import { toast } from "react-toastify";
 
 const MyProjects = () => {
   const [allProjects, setAllProjects] = useState([]);
   const {addProjectResponse,setAddProjectResponse} = useContext(addProjectResponseContext);
+   const {editProjectResponse, setEditProjectResponse} = useContext(editProjectResponseContext);
 
   const getAllUserProjects = async () => {
     const token = sessionStorage.getItem("token");
@@ -28,11 +30,32 @@ const MyProjects = () => {
     }
   };
 
+  const handleDeleteProject= async (pid)=>{
+    const token = sessionStorage.getItem("token");
+    //reqHeader
+    if (token) {
+      const reqHeader = {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
+      //api call
+      try {
+        const result = await deleteProjectAPI(pid,reqHeader)
+        if(result.status===200){
+          toast.success("Project deleted successfully");
+          getAllUserProjects();
+        }else{
+          toast.warning(result.response.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
   useEffect(() => {
     getAllUserProjects();
-  }, [addProjectResponse]);
-
-  console.log(allProjects);
+  }, [addProjectResponse,editProjectResponse]);
 
   return (
     <>
@@ -59,7 +82,7 @@ const MyProjects = () => {
                 >
                   <i className="fa-brands fa-github"></i>
                 </a>
-                <button className="btn text-dark">
+                <button onClick={()=>handleDeleteProject(project?._id)} className="btn text-dark">
                   <i className="fa-solid fa-trash"></i>
                 </button>
               </div>
