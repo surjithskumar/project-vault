@@ -7,41 +7,25 @@ import { getAllProjectAPI } from "../services/allAPI";
 const Projects = () => {
   const [allProjects, setAllProjects] = useState([]);
   const [searchKey,setSearchKey] = useState("");
-
+  
   const getAllProjects = async () => {
-  const token = sessionStorage.getItem("token");
-  // reqHeader
-  if (token) {
-    const reqHeader = {
-      "Content-Type": "application/json", // Correct Content-Type
-      "Authorization": `Bearer ${token}`,
-    };
-    
-    // Check if searchKey is defined and not empty
-    if (searchKey.trim()) {
-      try {
-        // API call
-        const result = await getAllProjectAPI(reqHeader, encodeURIComponent(searchKey));
-        console.log(result);
-        if (result.status === 200) {
-          setAllProjects(result.data);
-        } else {
-          console.log(result);
-        }
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    } else {
-      console.log("Search key is empty");
-      // Optionally fetch all projects if searchKey is empty
-      const result = await getAllProjectAPI(reqHeader, "");
+    const token = sessionStorage.getItem("token");
+    //reqHeader
+    if (token) {
+      const reqHeader = {
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${token}`,
+      };
+      //api call
+      const result = await getAllProjectAPI(reqHeader,searchKey);
+      console.log(result);
       if (result.status === 200) {
         setAllProjects(result.data);
+      } else {
+        console.log(result);
       }
     }
-  }
-};
-
+  };
 
   useEffect(()=>{
     getAllProjects()
@@ -55,7 +39,7 @@ const Projects = () => {
         <div className="d-flex justify-content-center align-items-center">
           <div className="d-flex border w-50 rounded mb-3">
             <input
-              onChange={e=>setSearchKey(e.target.value)}
+              onChange={(e)=>{setSearchKey(e.target.value)}}
               type="text"
               className="form-control"
               placeholder="Search by technologies"

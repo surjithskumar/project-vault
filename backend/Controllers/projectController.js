@@ -56,7 +56,7 @@ exports.getAllProjects = async (req, res) => {
         languages:{$regex:searchKey,$options:'i'}
     }
     try {
-        const allProjects = await projects.find();
+        const allProjects = await projects.find(query);
         res.status(200).json(allProjects);
     } catch (error) {
         console.error("Error while fetching all projects:", error);
