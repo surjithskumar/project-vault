@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Container, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { TokenAuthContext } from '../ContextAPI/TokenAuth'
 
-const Header = () => {
+function Header ( {insideDashboard} ) {
+  
+  const navigate = useNavigate()
+  const {isAuthorized,setIsAuthorized} = useContext(TokenAuthContext)
+
+  const logOut = () => {
+    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('token')
+    setIsAuthorized(false)
+    navigate('/')
+  }
+
   return (
     <>
       <Navbar className="bg-primary">
@@ -13,6 +25,7 @@ const Header = () => {
             Project-Fair
             </Link>
           </Navbar.Brand>
+          { insideDashboard && <button onClick={logOut} className='btn btn-outline-success'>Logout</button>}
         </Container>
       </Navbar>
     </>

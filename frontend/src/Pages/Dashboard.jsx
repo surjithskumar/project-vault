@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap'
 import MyProjects from '../Components/MyProjects'
 import Profile from '../Components/Profile'
 
-const Dashboard = () => {
+function Dashboard  () {
 
   const [username,setUsername] = useState("");
   useEffect(()=>{
@@ -15,10 +15,9 @@ const Dashboard = () => {
     }
   },[])
 
-
   return (
     <>
-      <Header />
+      <Header insideDashboard />
       <div className='container-fluid' style={{ width: '100%', height: '90vh' }}>
         <Row>
           {/* My projects */}
