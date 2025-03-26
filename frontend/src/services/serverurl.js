@@ -1,1 +1,1 @@
-export const server_url = "https://project-vault-tkc5.onrender.com"
+export const server_url = "https://project-vault-zktb.onrender.com"
